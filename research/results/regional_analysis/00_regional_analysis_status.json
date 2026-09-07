@@ -1,0 +1,8 @@
+{
+  "held_out_test_factory_count": 88,
+  "verified_test_factory_count": 0,
+  "verified_mapping_coverage_pct": 0.0,
+  "analysis_status": "pending_verified_mapping",
+  "mapping_file": "research/docs/factory_region_mapping.csv",
+  "note": "Only rows explicitly marked Verified=True are used. Missing geography is never inferred."
+}

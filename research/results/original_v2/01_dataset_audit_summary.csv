@@ -1,0 +1,10 @@
+dataset,rows,columns,date_min,date_max,duplicate_rows,missing_cells,missing_pct
+reasonable_price,12250,11,2015-01-01,2025-12-01,0,0,0.0
+tc5,14811,9,2015-01-01,2025-12-01,0,0,0.0
+weather,4089,8,2015-01-01,2026-03-12,0,0,0.0
+market_features,132,32,2015-01-01,2025-12-01,0,22,0.52
+international_demand,132,12,2015-01-01,2025-12-01,0,0,0.0
+exports_monthly,132,14,2015-01-01,2025-12-01,0,0,0.0
+destination_indicators,11,12,,,0,1,0.76
+exports_by_destination,1535,26,,,0,1639,4.11
+usd_lkr,139,3,2015-01-01,2026-07-01,0,0,0.0

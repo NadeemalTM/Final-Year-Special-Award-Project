@@ -1,0 +1,11 @@
+{
+  "eligible_factory_count": 104,
+  "mapping_row_count": 104,
+  "verified_factory_count": 0,
+  "verified_coverage_pct": 0.0,
+  "unknown_or_ineligible_factory_codes": [],
+  "eligible_factories_missing_mapping_rows": [],
+  "problem_count": 0,
+  "problems": [],
+  "status": "needs_mapping_work"
+}

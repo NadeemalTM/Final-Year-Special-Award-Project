@@ -1,0 +1,9 @@
+{
+  "seasonal_naive_comparable_observations": 974,
+  "seasonal_naive_total_test_observations": 1002,
+  "catboost_mae_on_seasonal_comparable_subset": 6.691824445166645,
+  "seasonal_naive_mae": 14.461151694045174,
+  "held_out_interval_coverage_pct": 97.60479041916167,
+  "residual_mean_lkr_per_kg": 2.018275969294653,
+  "residual_std_lkr_per_kg": 9.707003851337122
+}
