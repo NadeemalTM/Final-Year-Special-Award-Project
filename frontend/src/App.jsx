@@ -400,8 +400,28 @@ const susQuestions = [
   "I needed to learn a lot of things before I could get going with this system.",
 ];
 
-function RatingSelect({ label, value, onChange }) {
-  return <label className="evaluation-rating"><span>{label}</span><select value={value} onChange={(e) => onChange(Number(e.target.value))} required><option value="">Select</option>{[1,2,3,4,5].map((n) => <option value={n} key={n}>{n}</option>)}</select></label>;
+function RatingScale({ label, value, onChange, name, disabled = false }) {
+  return (
+    <div className="evaluation-rating">
+      <span className="rating-question" id={`${name}-label`}>{label}</span>
+      <div className="rating-options" role="radiogroup" aria-labelledby={`${name}-label`}>
+        {[1, 2, 3, 4, 5].map((number) => (
+          <label className={Number(value) === number ? "selected" : ""} key={number}>
+            <input
+              type="radio"
+              name={name}
+              value={number}
+              checked={Number(value) === number}
+              onChange={() => onChange(number)}
+              required
+              disabled={disabled}
+            />
+            <span>{number}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 function ResearchEvaluation() {
@@ -456,9 +476,9 @@ function ResearchEvaluation() {
     <form className="evaluation-form panel" onSubmit={submit}>
       <div className="panel-title"><h2>Participant evaluation</h2><Icon>assignment</Icon></div>
       <label><span>Participant role</span><input type="text" value={role} onChange={(e) => setRole(e.target.value)} placeholder="e.g. tea smallholder / researcher / factory stakeholder" required disabled={!enabled} /></label>
-      <fieldset><legend>Task completion</legend>{tasks.map((value, index) => <label className="task-check" key={index}><input type="checkbox" checked={value} onChange={(e) => updateTask(index, e.target.checked)} disabled={!enabled} /><span>Task {index + 1} completed successfully</span></label>)}</fieldset>
-      <fieldset><legend>System Usability Scale · 1 strongly disagree → 5 strongly agree</legend><div className="sus-grid">{susQuestions.map((question, index) => <RatingSelect key={question} label={`${index + 1}. ${question}`} value={sus[index]} onChange={(value) => updateSus(index, value)} />)}</div></fieldset>
-      <fieldset><legend>Research-specific ratings · 1 low → 5 high</legend><div className="rating-grid"><RatingSelect label="Price forecast clarity" value={ratings.price} onChange={(value) => setRatings({...ratings, price:value})} /><RatingSelect label="Gross-earnings clarity" value={ratings.earnings} onChange={(value) => setRatings({...ratings, earnings:value})} /><RatingSelect label="Uncertainty / range clarity" value={ratings.uncertainty} onChange={(value) => setRatings({...ratings, uncertainty:value})} /><RatingSelect label="Usefulness for planning" value={ratings.usefulness} onChange={(value) => setRatings({...ratings, usefulness:value})} /><RatingSelect label="Trust appropriateness" value={ratings.trust} onChange={(value) => setRatings({...ratings, trust:value})} /></div></fieldset>
+      <fieldset className="task-section"><legend>Task completion</legend><p className="section-helper">Mark each activity the participant completed without assistance.</p><div className="task-grid">{tasks.map((value, index) => <label className="task-check" key={index}><input type="checkbox" checked={value} onChange={(e) => updateTask(index, e.target.checked)} disabled={!enabled} /><span><b>Task {index + 1}</b> completed successfully</span></label>)}</div></fieldset>
+      <fieldset><legend>System Usability Scale</legend><div className="scale-key"><span>1 · Strongly disagree</span><i /><span>5 · Strongly agree</span></div><div className="sus-grid">{susQuestions.map((question, index) => <RatingScale key={question} name={`sus-${index + 1}`} label={`${index + 1}. ${question}`} value={sus[index]} onChange={(value) => updateSus(index, value)} disabled={!enabled} />)}</div></fieldset>
+      <fieldset><legend>Research-specific ratings</legend><div className="scale-key"><span>1 · Low</span><i /><span>5 · High</span></div><div className="rating-grid"><RatingScale name="rating-price" label="Price forecast clarity" value={ratings.price} onChange={(value) => setRatings({...ratings, price:value})} disabled={!enabled} /><RatingScale name="rating-earnings" label="Gross-earnings clarity" value={ratings.earnings} onChange={(value) => setRatings({...ratings, earnings:value})} disabled={!enabled} /><RatingScale name="rating-uncertainty" label="Uncertainty / range clarity" value={ratings.uncertainty} onChange={(value) => setRatings({...ratings, uncertainty:value})} disabled={!enabled} /><RatingScale name="rating-usefulness" label="Usefulness for planning" value={ratings.usefulness} onChange={(value) => setRatings({...ratings, usefulness:value})} disabled={!enabled} /><RatingScale name="rating-trust" label="Trust appropriateness" value={ratings.trust} onChange={(value) => setRatings({...ratings, trust:value})} disabled={!enabled} /></div></fieldset>
       <label><span>Optional comments</span><textarea value={comments} onChange={(e) => setComments(e.target.value)} maxLength="2000" rows="4" disabled={!enabled} /></label>
       <label className="consent-check"><input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} required disabled={!enabled} /><span>I consent to this anonymized research evaluation under the approved study process.</span></label>
       <button className="primary-button" type="submit" disabled={!enabled || submitting}>{submitting ? "Submitting…" : "Submit evaluation"}</button>
